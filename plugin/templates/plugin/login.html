@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kanboard</title>
+</head>
+<body>
+<form action="{% url 'plugin:accueil' %}" method="post">
+    <fieldset align="center">
+        <legend>Connexion</legend>
+        {% csrf_token %}
+        <div>
+            <input type="text" name="nom" placeholder="Nom">
+        </div>
+        <div>
+            <input type="text" name="prenom" placeholder="Prenom">
+        </div>
+        <div>
+            <input type="password" name="password" placeholder="Mot de passe">
+        </div>
+        <div>
+            <button>Se connecter</button>
+        </div>
+    </fieldset>
+</form>
+</body>
+</html>
