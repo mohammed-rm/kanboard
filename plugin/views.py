@@ -1,8 +1,11 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView
+from django.views.generic import View
 
 from .models import Utilisateur, Tache
+from .pdf import generer_en_pdf
 
 
 def login_form(request):
@@ -50,9 +53,19 @@ def cra(request):
 
     taches = Tache.get_par_date(annee, mois)
     duree = Tache.total_mensuel_formatter(annee, mois)
+    pdf = generer_en_pdf('plugin/pdf.html')
     context = ({
         "LISTE": taches,
-        "DURATION": duree
+        "DURATION": duree,
+        "PDF": pdf
     })
 
     return render(request, 'plugin/cra.html', {'CONTEXT': context})
+
+
+class GeneratePdf(View):
+    @staticmethod
+    def get(*args, **kwargs):
+        pdf = generer_en_pdf('plugin/pdf.html')
+        return HttpResponse(pdf, content_type='application/pdf')
+
