@@ -14,12 +14,12 @@
     <a href="{% url 'plugin:selection-taches' %}">Retour</a>&ensp;<br><br>
     <a href="{% url 'plugin:pdf' %}">PDF</a>&ensp;<br><br>
     <table>
-        {% if CONTEXT|get_value:"LISTE" %}
+        {% if CONTEXT|get_value:"TACHES" %}
             <tr>
                 <th>Tâche&ensp;&ensp;&ensp;&ensp;</th>
                 <th>Durée&ensp;</th>
             </tr>
-            {% for tache in CONTEXT|get_value:"LISTE" %}
+            {% for tache in CONTEXT|get_value:"TACHES" %}
                 <tr>
                     <td>{{ tache.nom_tache }}&ensp;&ensp;&ensp;&ensp;</td>
                     <td>{{ tache|get_duration }}&ensp;</td>
@@ -30,16 +30,16 @@
         {% endif %}
     </table>
     <table>
-        {% if CONTEXT|get_value:"LISTE" %}
+        {% if CONTEXT|get_value:"TACHES" %}
             <tr>
                 <th><br><br><br>Durée totale de l'ensemble des tâches pour ce mois</th>
             </tr>
             <tr align="center">
-                <td>{{ CONTEXT|get_value:"DURATION"|get_value:"Jours" }} Jour{{ 0|pluralize:"s" }}
-                    {{ CONTEXT|get_value:"DURATION"|get_value:"Heures" }}
-                    Heure{{ CONTEXT|get_value:"DURATION"|get_value:"Heures"|pluralize:"s" }}
-                    {{ CONTEXT|get_value:"DURATION"|get_value:"Minutes" }}
-                    Minute{{ CONTEXT|get_value:"DURATION"|get_value:"Minutes"|pluralize:"s" }}
+                <td>{{ CONTEXT|get_value:"DUREE"|get_value:"Jours" }} Jour{{ 0|pluralize:"s" }}
+                    {{ CONTEXT|get_value:"DUREE"|get_value:"Heures" }}
+                    Heure{{ CONTEXT|get_value:"DUREE"|get_value:"Heures"|pluralize:"s" }}
+                    {{ CONTEXT|get_value:"DUREE"|get_value:"Minutes" }}
+                    Minute{{ CONTEXT|get_value:"DUREE"|get_value:"Minutes"|pluralize:"s" }}
                 </td>
             </tr>
         {% endif %}

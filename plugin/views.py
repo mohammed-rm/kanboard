@@ -7,6 +7,9 @@ from django.views.generic import View
 from .models import Utilisateur, Tache
 from .pdf import generer_en_pdf
 
+taches_globale = Tache()
+dure_globale = dict[str, int]
+
 
 def login_form(request):
     return render(request, 'plugin/login.html')
@@ -36,36 +39,29 @@ class TacheListe(ListView):
 
 def cra(request):
     date = request.POST.get('start')
-    annee_str, mois_str, mois_final_str = "", "", ""
 
-    for nombre in range(4):
-        annee_str += date[nombre]
-    for nombre in range(5, 7):
-        mois_str += date[nombre]
-
-    if mois_str[0] == '0':
-        mois_final_str = mois_str[1]
-    else:
-        mois_final_str = mois_str
-
-    annee = int(annee_str)
-    mois = int(mois_final_str)
+    annee = Tache.conversion_annee(date)
+    mois = Tache.conversion_mois(date)
 
     taches = Tache.get_par_date(annee, mois)
     duree = Tache.total_mensuel_formatter(annee, mois)
-    pdf = generer_en_pdf('plugin/pdf.html')
+
+    global taches_globale
+    taches_globale = taches
+
+    global dure_globale
+    dure_globale = duree
+
     context = ({
-        "LISTE": taches,
-        "DURATION": duree,
-        "PDF": pdf
+        "TACHES": taches,
+        "DUREE": duree,
     })
 
     return render(request, 'plugin/cra.html', {'CONTEXT': context})
 
 
-class GeneratePdf(View):
+class GenererPDF(View):
     @staticmethod
     def get(*args, **kwargs):
-        pdf = generer_en_pdf('plugin/pdf.html')
+        pdf = generer_en_pdf('plugin/pdf.html', {"TACHES": taches_globale, "DUREE": dure_globale})
         return HttpResponse(pdf, content_type='application/pdf')
-

@@ -4,7 +4,7 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 
 
-def generer_en_pdf(template_src, context_dict=None):
+def generer_en_pdf(template_src, context_dict):
     """Methode pour convertir un fichier HTMl en PDF"""
     if context_dict is None:
         context_dict = {}

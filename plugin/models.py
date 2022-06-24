@@ -4,6 +4,12 @@ from django.db import models
 from django.db.models import QuerySet
 
 
+# logique métier
+
+class CRA:
+    pass
+
+
 class Tache(models.Model):
     nom_tache = models.CharField(max_length=100)
     date = models.DateField()
@@ -51,6 +57,31 @@ class Tache(models.Model):
             minutes_str = "Minutes"
 
         result = f'{jours} {jours_str} : {heures} {heures_str} : {minutes} {minutes_str}'
+
+        return result
+
+    @staticmethod
+    def conversion_annee(annee):
+        annee_str = ""
+        for nombre in range(4):
+            annee_str += annee[nombre]
+
+        result = int(annee_str)
+
+        return result
+
+    @staticmethod
+    def conversion_mois(mois):
+        mois_str, mois_final_str = "", ""
+
+        for nombre in range(5, 7):
+            mois_str += mois[nombre]
+
+        if mois_str[0] == '0':
+            mois_final_str = mois_str[1]
+        else:
+            mois_final_str = mois_str
+        result = int(mois_final_str)
 
         return result
 

@@ -11,7 +11,7 @@ urlpatterns = [
     path('ajout-tache', views.TacheAjout.as_view(), name='ajout-tache'),
     path('selection-taches', views.TacheListe.as_view(), name='selection-taches'),
     path('cra', views.cra, name='cra'),
-    path('pdf', views.GeneratePdf.as_view(), name='pdf'),
+    path('pdf', views.GenererPDF.as_view(), name='pdf'),
 
 ]
 
