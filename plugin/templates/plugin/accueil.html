@@ -5,11 +5,13 @@
     <title>Accueil</title>
 </head>
 <body>
+<div>
+    {% load static %} <img src="{% static "plugin/media/logo-ex-novo.png" %}" alt="Ex Novo"/>
+</div>
 <div align="center">
     <fieldset>
         <h1>Bienvenue {{ UTILISATEUR.prenom }} !</h1>
-        <!--<a href="{% url 'plugin:ajout-tache' %}">Ajouter une nouvelle tâche</a>&ensp;!-->
-        <a href="{% url 'plugin:taches-liste' %}">Afficher la liste des tâches</a>
+        <a href="{% url 'plugin:selection-taches' %}">Afficher la liste des tâches</a>
     </fieldset>
 </div>
 </body>

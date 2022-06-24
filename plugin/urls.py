@@ -1,3 +1,4 @@
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path
 
 from . import views
@@ -8,6 +9,9 @@ urlpatterns = [
     path('', views.login_form, name='login'),
     path('accueil', views.accueil, name='accueil'),
     path('ajout-tache', views.TacheAjout.as_view(), name='ajout-tache'),
-    path('taches-liste', views.TacheListe.as_view(), name='taches-liste'),
+    path('selection-taches', views.TacheListe.as_view(), name='selection-taches'),
+    path('cra', views.cra, name='cra'),
 
 ]
+
+urlpatterns += staticfiles_urlpatterns()

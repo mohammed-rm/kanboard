@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CRA</title>
+    {% load filtre %}
+</head>
+<body>
+<div>
+    {% load static %} <img src="{% static "plugin/media/logo-ex-novo.png" %}" alt="Ex Novo"/>
+</div>
+<div align="center">
+    <h1>CRA</h1>
+    <a href="{% url 'plugin:selection-taches' %}">Retour</a>&ensp;<br><br>
+    <table>
+        {% if CONTEXT|get_value:"LISTE" %}
+            <tr>
+                <th>Tâche&ensp;&ensp;&ensp;&ensp;</th>
+                <th>Durée&ensp;</th>
+            </tr>
+            {% for tache in CONTEXT|get_value:"LISTE" %}
+                <tr>
+                    <td>{{ tache.nom_tache }}&ensp;&ensp;&ensp;&ensp;</td>
+                    <td>{{ tache|get_duration }}&ensp;</td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <p>Liste vide</p>
+        {% endif %}
+    </table>
+    <table>
+        {% if CONTEXT|get_value:"LISTE" %}
+            <tr>
+                <th><br><br><br>Durée totale de l'ensemble des tâches pour ce mois</th>
+            </tr>
+            <tr align="center">
+                <td>{{ CONTEXT|get_value:"DURATION"|get_value:"Jours" }} Jour{{ 0|pluralize:"s" }}
+                    {{ CONTEXT|get_value:"DURATION"|get_value:"Heures" }}
+                    Heure{{ CONTEXT|get_value:"DURATION"|get_value:"Heures"|pluralize:"s" }}
+                    {{ CONTEXT|get_value:"DURATION"|get_value:"Minutes" }}
+                    Minute{{ CONTEXT|get_value:"DURATION"|get_value:"Minutes"|pluralize:"s" }}
+                </td>
+            </tr>
+        {% endif %}
+    </table>
+</div>
+</body>
+</html>

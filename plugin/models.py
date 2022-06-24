@@ -1,4 +1,7 @@
+import datetime
+
 from django.db import models
+from django.db.models import QuerySet
 
 
 class Tache(models.Model):
@@ -10,8 +13,46 @@ class Tache(models.Model):
         return f'Nom de la tâche : {self.nom_tache} | Date : {self.date}'
 
     @staticmethod
-    def afficher_par_date(annee: int, mois: int):
+    def get_par_date(annee: int, mois: int) -> QuerySet:
+        """Récupération des taches appartenant à une même période (année, mois)"""
         return Tache.objects.filter(date__year=annee, date__month=mois)
+
+    @staticmethod
+    def total_mensuel_secondes(annee: int, mois: int) -> float:
+        """Duree totale d'un ensemble de taches de la même année et du même mois en secondes"""
+        result = datetime.timedelta()
+        taches = Tache.get_par_date(annee, mois)
+        for tache in taches:
+            result += tache.duree
+        return result.total_seconds()
+
+    @staticmethod
+    def total_mensuel_formatter(annee: int, mois: int) -> dict[str, int]:
+        """Duree totale d'un ensemble de taches de la même année et du même mois"""
+        total_secondes = datetime.timedelta(seconds=Tache.total_mensuel_secondes(annee, mois))
+        result = datetime.timedelta() + total_secondes
+        return dict(Jours=result.days, Heures=result.seconds // 3600, Minutes=(result.seconds // 60) % 60)
+
+    def duree_tache(self):
+        """Duree totale d'une seule tache"""
+        jours_str, heures_str, minutes_str = "Jour", "Heure", "Minute"
+        jours = self.duree.days
+        secondes = self.duree.seconds
+
+        minutes = secondes // 60
+        heures = minutes // 60
+        minutes = minutes % 60
+
+        if jours > 1:
+            jours_str = "Jours"
+        if heures > 1:
+            heures_str = "Heures"
+        if minutes > 1:
+            minutes_str = "Minutes"
+
+        result = f'{jours} {jours_str} : {heures} {heures_str} : {minutes} {minutes_str}'
+
+        return result
 
 
 class Utilisateur(models.Model):

@@ -5,6 +5,9 @@
     <title>Kanboard</title>
 </head>
 <body>
+<div>
+    {% load static %} <img src="{% static "plugin/media/logo-ex-novo.png" %}" alt="Ex Novo"/>
+</div>
 <form action="{% url 'plugin:accueil' %}" method="post">
     <fieldset align="center">
         <legend>Connexion</legend>
