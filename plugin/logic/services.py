@@ -74,5 +74,4 @@ def conversion_mois(mois: str) -> int:
     else:
         mois_final_str = mois_str
     result = int(mois_final_str)
-
     return result
