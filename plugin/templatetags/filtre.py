@@ -1,5 +1,6 @@
 from django import template
 
+from plugin.logic.services import duree_tache
 from plugin.models import Tache
 
 register = template.Library()
@@ -12,4 +13,4 @@ def get_value(dictionary, key):
 
 @register.filter
 def get_duration(tache: Tache) -> str:
-    return tache.duree_tache()
+    return duree_tache(tache)

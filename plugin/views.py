@@ -4,7 +4,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView
 from django.views.generic import View
 
-from .models import Utilisateur, Tache
+from .models import Utilisateur
+from .logic.services import *
 from .pdf import generer_en_pdf
 
 taches_globale = Tache()
@@ -40,11 +41,11 @@ class TacheListe(ListView):
 def cra(request):
     date = request.POST.get('start')
 
-    annee = Tache.conversion_annee(date)
-    mois = Tache.conversion_mois(date)
+    annee = conversion_annee(date)
+    mois = conversion_mois(date)
 
-    taches = Tache.get_par_date(annee, mois)
-    duree = Tache.total_mensuel_formatter(annee, mois)
+    taches = get_par_date(annee, mois)
+    duree = total_mensuel_formatter(annee, mois)
 
     global taches_globale
     taches_globale = taches
